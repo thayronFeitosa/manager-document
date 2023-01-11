@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { TypeDocsModule } from './type_docs/type_docs.module';
 
 @Module({
-  imports: [],
+  imports: [TypeDocsModule],
   controllers: [],
   providers: [],
 })
