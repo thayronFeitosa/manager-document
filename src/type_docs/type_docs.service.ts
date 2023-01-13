@@ -1,26 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
 import { CreateTypeDocDto } from './dto/create-type_doc.dto';
 import { UpdateTypeDocDto } from './dto/update-type_doc.dto';
+import { TypeDoc } from './entities/type_doc.entity';
 
 @Injectable()
 export class TypeDocsService {
-  create(createTypeDocDto: CreateTypeDocDto) {
-    return 'This action adds a new typeDoc';
+  constructor(
+    @Inject('TYPE_DOCS_REPOSITORY') private repository: Repository<TypeDoc>,
+  ) {}
+  async create(createTypeDocDto: CreateTypeDocDto) {
+    const dto = this.repository.create(createTypeDocDto);
+    const create = await this.repository.save(dto);
+    return create;
   }
 
-  findAll() {
-    return `This action returns all typeDocs`;
+  async findAll() {
+    const listAll = await this.repository.find();
+    return listAll;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} typeDoc`;
+  async findById(id: number) {
+    const find = await this.repository.findOneBy({ id });
+    return find;
   }
 
-  update(id: number, updateTypeDocDto: UpdateTypeDocDto) {
-    return `This action updates a #${id} typeDoc`;
+  async update(id: number, updateTypeDocDto: UpdateTypeDocDto) {
+    const update = this.repository.update({ id }, updateTypeDocDto);
+    return update;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} typeDoc`;
+  async remove(id: number) {
+    const deleted = await this.repository.delete(id);
+    return deleted;
   }
 }

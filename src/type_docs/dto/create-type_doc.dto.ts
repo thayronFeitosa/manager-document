@@ -1,1 +1,3 @@
-export class CreateTypeDocDto {}
+export class CreateTypeDocDto {
+  name: string;
+}

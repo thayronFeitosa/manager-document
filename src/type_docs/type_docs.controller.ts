@@ -27,7 +27,7 @@ export class TypeDocsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.typeDocsService.findOne(+id);
+    return this.typeDocsService.findById(+id);
   }
 
   @Patch(':id')
