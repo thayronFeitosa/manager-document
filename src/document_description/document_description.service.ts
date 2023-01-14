@@ -7,7 +7,7 @@ import { DocumentDescription } from './entities/document_description.entity';
 @Injectable()
 export class DocumentDescriptionService {
   constructor(
-    @Inject('TYPE_DESCRIPTION_REPOSITORY')
+    @Inject('DOCUMENT_DESCRIPTION_REPOSITORY')
     private repository: Repository<DocumentDescription>,
   ) {}
   async create(createTypeDescriptionDto: CreateTypeDescriptionDto) {

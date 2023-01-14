@@ -3,7 +3,7 @@ import { DocumentDescription } from './entities/document_description.entity';
 
 export const typeDescriptionProviders: IProvider<DocumentDescription>[] = [
   {
-    provide: 'TYPE_DESCRIPTION_REPOSITORY',
+    provide: 'DOCUMENT_DESCRIPTION_REPOSITORY',
     useFactory: (dataSource: DataSource) =>
       dataSource.getRepository(DocumentDescription),
     inject: ['DATABASE_CONNECTION'],
