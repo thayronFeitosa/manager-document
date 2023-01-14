@@ -7,29 +7,29 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { TypeDescriptionService } from './type_description.service';
+import { DocumentDescriptionService } from './document_description.service';
 import { CreateTypeDescriptionDto } from './dto/create-type_description.dto';
 import { UpdateTypeDescriptionDto } from './dto/update-type_description.dto';
 
-@Controller('type-description')
-export class TypeDescriptionController {
+@Controller('document-description')
+export class DocumentDescriptionController {
   constructor(
-    private readonly typeDescriptionService: TypeDescriptionService,
+    private readonly documentDescriptionService: DocumentDescriptionService,
   ) {}
 
   @Post()
   create(@Body() createTypeDescriptionDto: CreateTypeDescriptionDto) {
-    return this.typeDescriptionService.create(createTypeDescriptionDto);
+    return this.documentDescriptionService.create(createTypeDescriptionDto);
   }
 
   @Get()
   findAll() {
-    return this.typeDescriptionService.findAll();
+    return this.documentDescriptionService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.typeDescriptionService.findOne(+id);
+    return this.documentDescriptionService.findOne(+id);
   }
 
   @Patch(':id')
@@ -37,11 +37,14 @@ export class TypeDescriptionController {
     @Param('id') id: string,
     @Body() updateTypeDescriptionDto: UpdateTypeDescriptionDto,
   ) {
-    return this.typeDescriptionService.update(+id, updateTypeDescriptionDto);
+    return this.documentDescriptionService.update(
+      +id,
+      updateTypeDescriptionDto,
+    );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.typeDescriptionService.remove(+id);
+    return this.documentDescriptionService.remove(+id);
   }
 }

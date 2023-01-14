@@ -2,13 +2,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CreateTypeDescriptionDto } from './dto/create-type_description.dto';
 import { UpdateTypeDescriptionDto } from './dto/update-type_description.dto';
-import { TypeDescription } from './entities/type_description.entity';
+import { DocumentDescription } from './entities/document_description.entity';
 
 @Injectable()
-export class TypeDescriptionService {
+export class DocumentDescriptionService {
   constructor(
     @Inject('TYPE_DESCRIPTION_REPOSITORY')
-    private repository: Repository<TypeDescription>,
+    private repository: Repository<DocumentDescription>,
   ) {}
   async create(createTypeDescriptionDto: CreateTypeDescriptionDto) {
     const dtoCreate = this.repository.create(createTypeDescriptionDto);

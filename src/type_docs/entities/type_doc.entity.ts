@@ -1,4 +1,4 @@
-import { TypeDescription } from 'src/type_description/entities/type_description.entity';
+import { DocumentDescription } from 'src/document_description/entities/document_description.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
@@ -9,6 +9,6 @@ export class TypeDoc {
   @Column()
   name: string;
 
-  @OneToMany(() => TypeDescription, (des) => des.typeDocumentId2)
-  description?: TypeDescription[];
+  @OneToMany(() => DocumentDescription, (des) => des.typeDocumentId2)
+  description?: DocumentDescription[];
 }

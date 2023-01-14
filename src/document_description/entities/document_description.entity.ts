@@ -8,8 +8,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 @Index('idTypeDoc_FK', ['idTypeDoc'], {})
-@Entity('typeDescription')
-export class TypeDescription {
+@Entity('document_description')
+export class DocumentDescription {
   @PrimaryGeneratedColumn()
   id?: number;
 
