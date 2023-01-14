@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CreateTypeDocDto } from './dto/create-type_doc.dto';
 import { UpdateTypeDocDto } from './dto/update-type_doc.dto';
@@ -10,9 +10,17 @@ export class TypeDocsService {
     @Inject('TYPE_DOCS_REPOSITORY') private repository: Repository<TypeDoc>,
   ) {}
   async create(createTypeDocDto: CreateTypeDocDto) {
-    const dto = this.repository.create(createTypeDocDto);
-    const create = await this.repository.save(dto);
-    return create;
+    const isAlreadyExists = await this.repository.findOneBy({
+      name: createTypeDocDto.name,
+    });
+
+    if (!isAlreadyExists) {
+      const dto = this.repository.create(createTypeDocDto);
+      const create = await this.repository.save(dto);
+      return create;
+    }
+
+    return new BadRequestException('name already exists');
   }
 
   async findAll() {
