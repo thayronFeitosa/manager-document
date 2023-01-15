@@ -5,4 +5,5 @@ export class CreateTypeDescriptionDto {
   endDate: Date;
   annex: string;
   idTypeDoc: number;
+  idDocument: number;
 }

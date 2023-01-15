@@ -20,6 +20,7 @@ export class DocumentDescriptionService {
     const list = await this.repository.find({
       relations: {
         typeDocumentId2: true,
+        idDocument2: true,
       },
     });
     return list;
