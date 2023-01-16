@@ -50,4 +50,16 @@ export class DocumentDescriptionService {
     const update = await this.repository.update({ id }, dataDocument);
     return update;
   }
+
+  async deleteFile(id: number): Promise<boolean> {
+    const update = await this.repository.update(
+      { id },
+      {
+        nameAnnex: null,
+        urlPath: null,
+        sizeFile: 0,
+      },
+    );
+    return update.affected > 0 ? true : false;
+  }
 }

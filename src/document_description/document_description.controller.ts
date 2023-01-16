@@ -15,6 +15,7 @@ import { DocumentDescriptionService } from './document_description.service';
 import { CreateTypeDescriptionDto } from './dto/create-type_description.dto';
 import { UpdateTypeDescriptionDto } from './dto/update-type_description.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { unlink, unlinkSync } from 'fs';
 
 @Controller('document-description')
 export class DocumentDescriptionController {
@@ -82,5 +83,22 @@ export class DocumentDescriptionController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.documentDescriptionService.remove(+id);
+  }
+
+  @Delete('file/:id')
+  async removeFile(@Param('id') id: string) {
+    const isAlreadyExist = await this.documentDescriptionService.findOne(+id);
+
+    if (!isAlreadyExist || !isAlreadyExist.urlPath) {
+      return new BadRequestException('File not found');
+    }
+
+    const deletedFile = await this.documentDescriptionService.deleteFile(+id);
+
+    if (deletedFile) {
+      const pathDocument = isAlreadyExist.urlPath;
+      unlinkSync(pathDocument);
+    }
+    return deletedFile;
   }
 }
