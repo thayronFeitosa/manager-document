@@ -15,12 +15,14 @@ import { DocumentDescriptionService } from './document_description.service';
 import { CreateTypeDescriptionDto } from './dto/create-type_description.dto';
 import { UpdateTypeDescriptionDto } from './dto/update-type_description.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { unlink, unlinkSync } from 'fs';
+import { unlinkSync } from 'fs';
+import { TypeDocsService } from 'src/type_docs/type_docs.service';
 
 @Controller('document-description')
 export class DocumentDescriptionController {
   constructor(
     private readonly documentDescriptionService: DocumentDescriptionService,
+    private readonly typeDocument: TypeDocsService,
   ) {}
   @Post('upload/:id')
   @UseInterceptors(
@@ -60,7 +62,15 @@ export class DocumentDescriptionController {
   }
 
   @Post()
-  create(@Body() dataCreate: CreateTypeDescriptionDto) {
+  async create(@Body() dataCreate: CreateTypeDescriptionDto) {
+    const isAlreadyExistTypeDocument = await this.typeDocument.findById(
+      dataCreate.idTypeDoc,
+    );
+
+    if (!isAlreadyExistTypeDocument) {
+      return new BadRequestException('TypeDocument not found');
+    }
+
     return this.documentDescriptionService.create(dataCreate);
   }
 
