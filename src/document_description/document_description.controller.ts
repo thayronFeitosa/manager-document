@@ -46,6 +46,11 @@ export class DocumentDescriptionController {
       return new NotFoundException();
     }
 
+    if (isAlreadyExist.urlPath) {
+      unlinkSync(file.path);
+      return new BadRequestException('File has already been uploaded');
+    }
+
     const { path, originalname, size } = file;
     return this.documentDescriptionService.addFile(+id, {
       nameAnnex: originalname,
