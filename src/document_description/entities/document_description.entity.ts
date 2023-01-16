@@ -1,16 +1,13 @@
 import { TypeDoc } from 'src/type_docs/entities/type_doc.entity';
-import { Document } from 'src/document/entities/document.entity';
 import {
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 @Index('idTypeDoc_FK', ['idTypeDoc'], {})
-@Index('idDocument_FK', ['idDocument'], {})
 @Entity('document_description')
 export class DocumentDescription {
   @PrimaryGeneratedColumn()
@@ -34,14 +31,16 @@ export class DocumentDescription {
   @Column()
   idTypeDoc: number;
 
+  @Column({ nullable: true })
+  nameAnnex?: string;
+
+  @Column({ nullable: true })
+  sizeFile?: number;
+
+  @Column({ nullable: true })
+  urlPath?: string;
+
   @ManyToOne(() => TypeDoc, (typeDoc) => typeDoc.description)
   @JoinColumn([{ name: 'idTypeDoc', referencedColumnName: 'id' }])
   typeDocumentId2?: TypeDoc;
-
-  @Column()
-  idDocument: number;
-
-  @OneToOne(() => Document, (doc) => doc.id)
-  @JoinColumn([{ name: 'idDocument', referencedColumnName: 'id' }])
-  idDocument2: Document;
 }

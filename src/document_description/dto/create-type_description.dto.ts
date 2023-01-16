@@ -5,5 +5,13 @@ export class CreateTypeDescriptionDto {
   endDate: Date;
   annex: string;
   idTypeDoc: number;
-  idDocument: number;
+  nameAnnex: string;
+  sizeFile: number;
+  urlPath: string;
+}
+
+export class DocumentDto {
+  nameAnnex: string;
+  sizeFile: number;
+  urlPath: string;
 }

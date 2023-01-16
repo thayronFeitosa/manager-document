@@ -1,6 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CreateTypeDescriptionDto } from './dto/create-type_description.dto';
+import {
+  CreateTypeDescriptionDto,
+  DocumentDto,
+} from './dto/create-type_description.dto';
 import { UpdateTypeDescriptionDto } from './dto/update-type_description.dto';
 import { DocumentDescription } from './entities/document_description.entity';
 
@@ -20,7 +23,6 @@ export class DocumentDescriptionService {
     const list = await this.repository.find({
       relations: {
         typeDocumentId2: true,
-        idDocument2: true,
       },
     });
     return list;
@@ -42,5 +44,10 @@ export class DocumentDescriptionService {
   async remove(id: number) {
     const remove = await this.repository.delete({ id });
     return remove;
+  }
+
+  async addFile(id: number, dataDocument: DocumentDto) {
+    const update = await this.repository.update({ id }, dataDocument);
+    return update;
   }
 }
